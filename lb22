@@ -1,0 +1,100 @@
+using System;
+
+class Vehicle
+{
+    private double coordinatesX;
+    private double coordinatesY;
+    private double price;
+    private double speed;
+    private int year;
+
+    public Vehicle(double coordinatesX, double coordinatesY, double price, double speed, int year)
+    {
+        this.coordinatesX = coordinatesX;
+        this.coordinatesY = coordinatesY;
+        this.price = price;
+        this.speed = speed;
+        this.year = year;
+    }
+
+    public void DisplayInfo()
+    {
+        Console.WriteLine($"Координаты: ({coordinatesX}, {coordinatesY})");
+        Console.WriteLine($"Цена: {price}$");
+        Console.WriteLine($"Скорость: {speed} км/ч");
+        Console.WriteLine($"Год выпуска: {year}");
+    }
+}
+
+class Plane : Vehicle
+{
+    private double altitude;
+    private int passengers;
+
+    public Plane(double coordinatesX, double coordinatesY, double price, double speed, int year, double altitude, int passengers)
+        : base(coordinatesX, coordinatesY, price, speed, year)
+    {
+        this.altitude = altitude;
+        this.passengers = passengers;
+    }
+
+    public new void DisplayInfo()
+    {
+        base.DisplayInfo();
+        Console.WriteLine($"Высота: {altitude} м");
+        Console.WriteLine($"Количество пассажиров: {passengers}");
+    }
+}
+
+class Car : Vehicle
+{
+    public Car(double coordinatesX, double coordinatesY, double price, double speed, int year)
+        : base(coordinatesX, coordinatesY, price, speed, year)
+    {
+    }
+}
+
+class Ship : Vehicle
+{
+    private int passengers;
+    private string homePort;
+
+    public Ship(double coordinatesX, double coordinatesY, double price, double speed, int year, int passengers, string homePort)
+        : base(coordinatesX, coordinatesY, price, speed, year)
+    {
+        this.passengers = passengers;
+        this.homePort = homePort;
+    }
+
+    public new void DisplayInfo()
+    {
+        base.DisplayInfo();
+        Console.WriteLine($"Количество пассажиров: {passengers}");
+        Console.WriteLine($"Порт приписки: {homePort}");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Plane plane = new Plane(10.0, 20.0, 1000000, 900, 2020, 10000, 150);
+        Car car = new Car(30.0, 40.0, 50000, 180, 2022);
+        Ship ship = new Ship(50.0, 60.0, 2000000, 30, 2018, 2500, "New York");
+
+        while (true)
+        {
+            Console.WriteLine("Информация о самолете:");
+            plane.DisplayInfo();
+
+            Console.WriteLine("\nИнформация о машине:");
+            car.DisplayInfo();
+
+            Console.WriteLine("\nИнформация о корабле:");
+            ship.DisplayInfo();
+
+            Console.WriteLine("\nДля завершения программы нажмите Enter.");
+            Console.ReadLine();
+        }
+    }
+}
