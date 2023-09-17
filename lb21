@@ -1,0 +1,173 @@
+using System;
+
+class Pupil
+{
+    public virtual void Study()
+    {
+        Console.WriteLine("Pupil is studying.");
+    }
+
+    public virtual void Read()
+    {
+        Console.WriteLine("Pupil is reading.");
+    }
+
+    public virtual void Write()
+    {
+        Console.WriteLine("Pupil is writing.");
+    }
+
+    public virtual void Relax()
+    {
+        Console.WriteLine("Pupil is relaxing.");
+    }
+}
+
+class ExcellentPupil : Pupil
+{
+    public override void Study()
+    {
+        Console.WriteLine("Excellent pupil is studying.");
+    }
+
+    public override void Read()
+    {
+        Console.WriteLine("Excellent pupil is reading.");
+    }
+
+    public override void Write()
+    {
+        Console.WriteLine("Excellent pupil is writing.");
+    }
+
+    public override void Relax()
+    {
+        Console.WriteLine("Excellent pupil is relaxing.");
+    }
+}
+
+class GoodPupil : Pupil
+{
+    public override void Study()
+    {
+        Console.WriteLine("Good pupil is studying.");
+    }
+
+    public override void Read()
+    {
+        Console.WriteLine("Good pupil is reading.");
+    }
+
+    public override void Write()
+    {
+        Console.WriteLine("Good pupil is writing.");
+    }
+
+    public override void Relax()
+    {
+        Console.WriteLine("Good pupil is relaxing.");
+    }
+}
+
+class BadPupil : Pupil
+{
+    public override void Study()
+    {
+        Console.WriteLine("Bad pupil is studying.");
+    }
+
+    public override void Read()
+    {
+        Console.WriteLine("Bad pupil is reading.");
+    }
+
+    public override void Write()
+    {
+        Console.WriteLine("Bad pupil is writing.");
+    }
+
+    public override void Relax()
+    {
+        Console.WriteLine("Bad pupil is relaxing.");
+    }
+}
+
+class ClassRoom
+{
+    private Pupil[] pupils;
+
+    public ClassRoom(params Pupil[] pupils)
+    {
+        if (pupils.Length < 2 || pupils.Length > 4)
+        {
+            throw new ArgumentException("ClassRoom must have 2 to 4 pupils.");
+        }
+
+        this.pupils = new Pupil[pupils.Length];
+
+        for (int i = 0; i < pupils.Length; i++)
+        {
+            this.pupils[i] = pupils[i];
+        }
+    }
+
+    public void StartClass()
+    {
+        foreach (var pupil in pupils)
+        {
+            Console.WriteLine("=== Student ===");
+            pupil.Study();
+            pupil.Read();
+            pupil.Write();
+            pupil.Relax();
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Enter the number of pupils (2 to 4):");
+        int numberOfPupils;
+
+        while (!int.TryParse(Console.ReadLine(), out numberOfPupils) || numberOfPupils < 2 || numberOfPupils > 4)
+        {
+            Console.WriteLine("Invalid input. Please enter a number between 2 and 4:");
+        }
+
+        var pupils = new Pupil[numberOfPupils];
+
+        for (int i = 0; i < numberOfPupils; i++)
+        {
+            Console.WriteLine($"Enter the type of pupil {i + 1} (1 - Excellent, 2 - Good, 3 - Bad):");
+            int pupilType;
+
+            while (!int.TryParse(Console.ReadLine(), out pupilType) || pupilType < 1 || pupilType > 3)
+            {
+                Console.WriteLine("Invalid input. Please enter 1 for Excellent, 2 for Good, or 3 for Bad:");
+            }
+
+            switch (pupilType)
+            {
+                case 1:
+                    pupils[i] = new ExcellentPupil();
+                    break;
+                case 2:
+                    pupils[i] = new GoodPupil();
+                    break;
+                case 3:
+                    pupils[i] = new BadPupil();
+                    break;
+            }
+        }
+
+        var classroom = new ClassRoom(pupils);
+
+        // Начинаем урок
+        classroom.StartClass();
+
+        Console.WriteLine("Press any key to exit...");
+        Console.ReadKey();
+    }
+}
